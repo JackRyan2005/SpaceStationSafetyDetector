@@ -1,5 +1,3 @@
-Of course. Here is the updated README.md with the initial setup steps and the team members section, all properly formatted.
-
 # 🚀 Space Station Safety Object Detection using YOLOv11 (with Roboflow)
 
 This project focuses on detecting safety-critical objects in a simulated space station environment using a **YOLOv11 object detection model**. The primary goal is to accurately identify, visualize, and count essential items like fire extinguishers, oxygen tanks, and emergency phones to enhance safety monitoring protocols in real-world aerospace applications.
