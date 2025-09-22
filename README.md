@@ -88,17 +88,191 @@ Below are the training and validation performance graphs, showing metrics such a
 
 ---
 
-## 🛰️ Why This Matters
-
-*   **Robustness**: The use of data augmentation makes the model more resilient to variations in lighting, rotation, and perspective.
-*   **High Accuracy**: YOLOv11 provides a strong backbone for object detection, ensuring efficient and accurate inference.
-*   **Practical Application**: Beyond simple detection, the counting feature makes this model a valuable tool for safety and compliance monitoring in critical environments like space stations.
-
----
-
 ## ✅ Conclusion
 
 With a **mAP@50 of 76.3%**, strong precision (~82%), and reliable recall (~71%), this model demonstrates its capability as an effective safety monitoring tool. It can be integrated into automated systems to ensure that all necessary safety equipment is present and accounted for in a space station or other high-stakes environments.
+
+---
+
+## 🚀 Interactive Demo Application
+
+To provide a hands-on demonstration of the model's capabilities, an interactive web application was developed using **Streamlit**. The application is designed to be run in a **Google Colab** notebook and exposed to the public internet using **ngrok**. This setup allows anyone to upload an image and see the model's detections in real-time without any local installation.
+
+### How to Run the Demo
+
+You can launch the interactive demo by running the following Python code in a Google Colab notebook. Make sure to replace the placeholder API keys with your own.
+
+```python
+# =========================================================
+# 🚀 Streamlit + Roboflow YOLOv11 Inference + ngrok in Colab
+# =========================================================
+
+# Step 1: Install dependencies
+!pip install -q streamlit pyngrok inference-sdk opencv-python-headless pillow
+
+# Step 2: Define Streamlit App
+app_code = """
+import streamlit as st
+from inference_sdk import InferenceHTTPClient
+from PIL import Image
+import os, io, cv2
+import numpy as np
+import pandas as pd
+
+# --- Page Config ---
+st.set_page_config(
+    page_title="YOLOv11 Safety Detector",
+    page_icon="🛡️",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# --- Custom CSS ---
+st.markdown('''
+<style>
+    .stApp { background: linear-gradient(120deg, #eef2f7, #dde7f2); }
+    h1 { color: #2c3e50; text-align: center; }
+    .block-container { padding-top: 1rem; }
+    .stButton>button {
+        background-color: #2c3e50;
+        color: white;
+        border-radius: 8px;
+        padding: 0.5em 1em;
+        font-weight: 600;
+    }
+    .stButton>button:hover {
+        background-color: #34495e;
+        color: #f1f1f1;
+    }
+</style>
+''', unsafe_allow_html=True)
+
+# --- Sidebar ---
+with st.sidebar:
+    st.title("🛡️ Safety Equipment Detector")
+    st.info("Upload an image and let the YOLOv11 model (Roboflow) detect safety equipment.")
+
+    st.markdown("### 📊 Model Performance")
+    st.metric("mAP@50", "76.3%")
+    st.metric("Precision", "82.2%")
+    st.metric("Recall", "70.9%")
+
+    st.markdown("### 📦 Dataset Classes")
+    dataset_counts = {
+        "Emergency Phone": 238,
+        "Fire Alarm": 264,
+        "Fire Extinguisher": 793,
+        "First Aid Box": 841,
+        "Nitrogen Tank": 1400,
+        "Oxygen Tank": 1457,
+        "Safety Switch Panel": 255
+    }
+    st.table(pd.DataFrame(list(dataset_counts.items()), columns=["Class", "Count"]))
+
+# --- Main Title ---
+st.title("🚀 YOLOv11 Safety Equipment Detection")
+
+# --- Initialize Roboflow Client ---
+API_KEY = "Q176zA82AA6cuCZhT4g8"  # 🔑 Replace with your Roboflow API key
+WORKSPACE_NAME = "xwork-bjgiu"
+WORKFLOW_ID = "detect-count-and-visualize-5"
+
+try:
+    client = InferenceHTTPClient(
+        api_url="https://serverless.roboflow.com",
+        api_key=API_KEY
+    )
+except Exception as e:
+    st.error(f"Error initializing client: {e}")
+    st.stop()
+
+# --- File Uploader ---
+uploaded_file = st.file_uploader("📂 Upload an Image", type=["jpg","jpeg","png"])
+
+if uploaded_file:
+    # Save temporary image
+    image_bytes = uploaded_file.getvalue()
+    temp_image_path = "temp_image.jpg"
+    with open(temp_image_path, "wb") as f:
+        f.write(image_bytes)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("📥 Uploaded Image")
+        image = Image.open(io.BytesIO(image_bytes))
+        st.image(image, caption="Original", use_column_width=True)
+
+    with col2:
+        st.subheader("🔍 Detection Results")
+        with st.spinner("Running YOLOv11 inference..."):
+            try:
+                result = client.run_workflow(
+                    workspace_name=WORKSPACE_NAME,
+                    workflow_id=WORKFLOW_ID,
+                    images={"image": temp_image_path},
+                    use_cache=True
+                )
+
+                # ✅ Handle visualization if provided
+                if result and isinstance(result, list):
+                    res = result[0]
+
+                    if "visualization" in res and res["visualization"]:
+                        st.image(res["visualization"], caption="Detection Visualization", use_column_width=True)
+
+                    # ✅ Handle predictions
+                    predictions = res.get("predictions", {}).get("predictions", [])
+                    if predictions:
+                        # Build dataframe
+                        rows = []
+                        class_counts = {}
+                        for pred in predictions:
+                            cname = pred.get("class", "Unknown")
+                            conf = round(pred.get("confidence", 0)*100, 2)
+                            class_counts[cname] = class_counts.get(cname, 0) + 1
+                            rows.append([cname, conf, pred.get("x"), pred.get("y"), pred.get("width"), pred.get("height")])
+
+                        st.markdown("### 📊 Detected Objects")
+                        st.table(pd.DataFrame(rows, columns=["Class", "Confidence %", "X", "Y", "Width", "Height"]))
+
+                        st.markdown("### 🔢 Object Counts")
+                        st.table(pd.DataFrame(list(class_counts.items()), columns=["Class", "Count"]))
+
+                    else:
+                        st.warning("⚠️ No objects detected in this image.")
+
+                    with st.expander("Show Raw JSON Output"):
+                        st.json(result)
+                else:
+                    st.error("Unexpected model response")
+                    st.json(result)
+
+            except Exception as e:
+                st.error(f"Inference failed: {e}")
+
+    if os.path.exists(temp_image_path):
+        os.remove(temp_image_path)
+"""
+
+# Step 3: Write app.py
+with open("app.py", "w") as f:
+    f.write(app_code)
+
+# Step 4: ngrok setup
+from pyngrok import ngrok
+ngrok.kill()
+NGROK_AUTH_TOKEN = ""   # 🔑 Replace with your ngrok token
+ngrok.set_auth_token(NGROK_AUTH_TOKEN)
+public_url = ngrok.connect(8501)
+print("="*60)
+print("🚀 Streamlit App is LIVE")
+print("🔗 Public URL:", public_url)
+print("="*60)
+
+# Step 5: Run Streamlit (non-blocking)
+!nohup streamlit run app.py --server.port 8501 &
+```
 
 ---
 
