@@ -1,4 +1,3 @@
-Of course. Here is the complete and polished README.md, now including a section that showcases the final application interface.
 
 # 🚀 Space Station Safety Object Detection using YOLOv11 (with Roboflow)
 
