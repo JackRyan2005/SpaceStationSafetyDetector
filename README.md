@@ -1,6 +1,21 @@
+Of course. Here is the updated README.md with the initial setup steps and the team members section, all properly formatted.
+
 # 🚀 Space Station Safety Object Detection using YOLOv11 (with Roboflow)
 
 This project focuses on detecting safety-critical objects in a simulated space station environment using a **YOLOv11 object detection model**. The primary goal is to accurately identify, visualize, and count essential items like fire extinguishers, oxygen tanks, and emergency phones to enhance safety monitoring protocols in real-world aerospace applications.
+
+---
+
+## 🛠️ Initial Setup and Workflow
+
+The project was developed following these key steps:
+
+1.  **Data Collection**: The initial dataset was sourced from the Falcon Simulator, providing images of a simulated space station environment.
+2.  **Data Upload to Roboflow**: The collected images were uploaded to the Roboflow platform, which served as the primary tool for dataset management and model training.
+3.  **Data Preprocessing & Augmentation**: Within Roboflow, the dataset was cleaned and prepared. Augmentations such as flips, brightness adjustments, and rotations were applied to increase the dataset's diversity and improve model robustness.
+4.  **Model Training**: The preprocessed dataset was used to train a YOLOv11 object detection model directly on the Roboflow platform, leveraging its streamlined training infrastructure with a COCO backbone.
+5.  **Model Evaluation**: After training, the model's performance was evaluated using standard object detection metrics (mAP, Precision, and Recall) provided by Roboflow's built-in analysis tools.
+6.  **Inference and Application**: The trained model was used for inference. A simple application was built using **Streamlit in a Google Colab environment** to run the model on new images and visualize the detections.
 
 ---
 
@@ -14,10 +29,7 @@ The model was trained on a curated dataset of images from a simulated space stat
     *   **Training**: ~70%
     *   **Validation**: ~20%
     *   **Testing**: ~10%
-*   **Augmentations Applied**: To improve model robustness, the following augmentations were used:
-    *   Horizontal Flip
-    *   Brightness & Exposure Adjustments
-    *   Rotation (±15° to ±30°)
+*   **Augmentations Applied**: Horizontal Flip, Brightness & Exposure Adjustments, Rotation (±15° to ±30°).
 
 ### Classes (7)
 
@@ -71,8 +83,7 @@ The model's performance was evaluated on the validation set, achieving the follo
 
 Below are the training and validation performance graphs, showing metrics such as loss and mean Average Precision (mAP) over epochs.
 
-**Model Performance**
-![Model Performance 1](https://i.postimg.cc/7hnSg9NN/Screenshot-2025-09-22-171055.png)![Model Performance 2](https://i.postimg.cc/rFq1868Z/Screenshot-2025-09-22-171110.png)
+**Model Performance**![Model Performance 1](https://i.postimg.cc/7hnSg9NN/Screenshot-2025-09-22-171055.png)![Model Performance 2](https://i.postimg.cc/rFq1868Z/Screenshot-2025-09-22-171110.png)
 
 **Advanced Training Graphs**
 ![Results 1](https://i.postimg.cc/FHR0Ljkj/Screenshot-2025-09-22-171027.png)
@@ -102,3 +113,14 @@ While the current model performs well, there are several avenues for future impr
 *   **Hyperparameter Tuning**: Fine-tune model parameters such as learning rate, batch size, and optimizer settings to potentially boost performance metrics.
 *   **Real-Time Alert System**: Integrate the model with a live video feed to create a real-time monitoring system that can trigger alerts if a critical safety item is missing or obstructed.
 *   **Edge Deployment**: Optimize the model for deployment on edge devices (like a Raspberry Pi or NVIDIA Jetson) for low-latency, on-site processing without relying on a constant cloud connection.
+
+---
+
+## 👥 Team Members
+
+*   V C Premchand Yadav
+*   Edupulapati Sai Praneeth
+*   P R Kiran Kumar Reddy
+*   K Sri Harsha Vardhan
+*   Liel Stephen
+*   Suheb Nawab Sheikh
