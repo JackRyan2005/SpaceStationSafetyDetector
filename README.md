@@ -173,7 +173,7 @@ with st.sidebar:
 st.title("🚀 YOLOv11 Safety Equipment Detection")
 
 # --- Initialize Roboflow Client ---
-API_KEY = "Q176zA82AA6cuCZhT4g8"  # 🔑 Replace with your Roboflow API key
+API_KEY = ""  # 🔑 Replace with your Roboflow API key
 WORKSPACE_NAME = "xwork-bjgiu"
 WORKFLOW_ID = "detect-count-and-visualize-5"
 
