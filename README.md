@@ -1,3 +1,5 @@
+Of course. Here is the complete and polished README.md, now including a section that showcases the final application interface.
+
 # 🚀 Space Station Safety Object Detection using YOLOv11 (with Roboflow)
 
 This project focuses on detecting safety-critical objects in a simulated space station environment using a **YOLOv11 object detection model**. The primary goal is to accurately identify, visualize, and count essential items like fire extinguishers, oxygen tanks, and emergency phones to enhance safety monitoring protocols in real-world aerospace applications.
@@ -49,7 +51,7 @@ The dataset includes the following object classes with their respective counts:
 
 ## 🔹 Model
 
-*   **Architecture**: YOLOv11 (latest Ultralytics version)
+*   **Architecture**: YOLOv11 (latest Ultracyclics version)
 *   **Framework**: Roboflow (trained with a COCO backbone)
 *   **Task**: Object Detection
 
@@ -85,12 +87,6 @@ Below are the training and validation performance graphs, showing metrics such a
 
 **Advanced Training Graphs**
 ![Results 1](https://i.postimg.cc/FHR0Ljkj/Screenshot-2025-09-22-171027.png)
-
----
-
-## ✅ Conclusion
-
-With a **mAP@50 of 76.3%**, strong precision (~82%), and reliable recall (~71%), this model demonstrates its capability as an effective safety monitoring tool. It can be integrated into automated systems to ensure that all necessary safety equipment is present and accounted for in a space station or other high-stakes environments.
 
 ---
 
@@ -173,7 +169,7 @@ with st.sidebar:
 st.title("🚀 YOLOv11 Safety Equipment Detection")
 
 # --- Initialize Roboflow Client ---
-API_KEY = ""  # 🔑 Replace with your Roboflow API key
+API_KEY = "YOUR_ROBOFLOW_API_KEY"  # 🔑 Replace with your Roboflow API key
 WORKSPACE_NAME = "xwork-bjgiu"
 WORKFLOW_ID = "detect-count-and-visualize-5"
 
@@ -262,7 +258,7 @@ with open("app.py", "w") as f:
 # Step 4: ngrok setup
 from pyngrok import ngrok
 ngrok.kill()
-NGROK_AUTH_TOKEN = ""   # 🔑 Replace with your ngrok token
+NGROK_AUTH_TOKEN = "YOUR_NGROK_AUTH_TOKEN"   # 🔑 Replace with your ngrok token
 ngrok.set_auth_token(NGROK_AUTH_TOKEN)
 public_url = ngrok.connect(8501)
 print("="*60)
@@ -273,6 +269,20 @@ print("="*60)
 # Step 5: Run Streamlit (non-blocking)
 !nohup streamlit run app.py --server.port 8501 &
 ```
+
+---
+
+## 🖥️ Final Application Interface
+
+The Streamlit application provides a clean and user-friendly interface for interacting with the model. Users can upload an image and view the original image alongside the annotated output, with detailed tables for detected objects and their counts.
+
+[![Final Application Screenshot](https://i.postimg.cc/rwXVnKsK/Screenshot-2025-09-22-183635.png)](https://postimg.cc/YhRBj21H)
+
+---
+
+## ✅ Conclusion
+
+With a **mAP@50 of 76.3%**, strong precision (~82%), and reliable recall (~71%), this model demonstrates its capability as an effective safety monitoring tool. It can be integrated into automated systems to ensure that all necessary safety equipment is present and accounted for in a space station or other high-stakes environments.
 
 ---
 
