@@ -309,7 +309,7 @@ While the current model performs well, there are several avenues for future impr
 
 ---
 
-## 🙏 Thank You  
+##  Thank You  🙏 
 
 Special thanks to the following organizations that made this project possible:
 
