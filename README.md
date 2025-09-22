@@ -68,7 +68,7 @@ The model follows a three-step process:
 
 ## 📊 Model Performance
 
-The model's performance was evaluated on the validation set, achieving the following metrics:
+The Model's performance was evaluated on the validation set, achieving the following metrics:
 
 | Metric | Score |
 | :--- | :--- |
