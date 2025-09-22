@@ -52,7 +52,7 @@ The dataset includes the following object classes with their respective counts:
 
 *   **Architecture**: YOLOv11 (latest Ultracyclics version)
 *   **Framework**: Roboflow (trained with a COCO backbone)
-*   **Task**: Object Detection
+*   **Task**: Object Detection such as first-aid kit,oxygen tanks, etc
 
 ### Workflow (Detect–Visualize–Count)
 
