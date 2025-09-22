@@ -305,3 +305,20 @@ While the current model performs well, there are several avenues for future impr
 *   K Sri Harsha Vardhan
 *   Liel Stephen
 *   Suheb Nawab Sheikh
+---
+
+---
+
+## 🙏 Thank You  
+
+Special thanks to the following organizations that made this project possible:
+
+- **[Duality AI](https://www.linkedin.com/company/dualityai/)**  
+  [![Duality AI](https://img.shields.io/badge/Duality%20AI-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/company/dualityai/)  
+  Thank you for this Duality AI  
+
+- **[Roboflow](https://roboflow.com/)**  
+  [![Roboflow](https://img.shields.io/badge/Roboflow-8A2BE2?logo=roboflow&logoColor=white)](https://roboflow.com/)  
+  Thanks to Roboflow for providing tools to annotate and train our data
+
+
